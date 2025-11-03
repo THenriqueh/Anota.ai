@@ -1,4 +1,4 @@
-package com.anotaai.anota.ai.config.mongo;
+package com.anotaai.anota.ai.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

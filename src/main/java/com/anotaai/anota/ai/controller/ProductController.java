@@ -2,6 +2,7 @@ package com.anotaai.anota.ai.controller;
 
 import com.anotaai.anota.ai.domain.product.Product;
 import com.anotaai.anota.ai.dto.ProductDTO;
+import com.anotaai.anota.ai.dto.ProductUpdateDTO;
 import com.anotaai.anota.ai.service.ProductUseCase;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
@@ -29,14 +30,14 @@ public class ProductController {
         return ResponseEntity.ok().body(categories);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Product> updateProduct(@PathParam("id") String userId, @RequestBody ProductDTO product) {
+    @PutMapping("/{productId}")
+    public ResponseEntity<Product> updateProduct(@PathVariable("productId") String userId, @RequestBody ProductUpdateDTO product) {
         Product updatedProduct = this.productUseCase.updateProduct(userId, product);
         return ResponseEntity.ok().body(updatedProduct);
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteProduct(@PathParam("id") String userId) {
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable("productId") String userId) {
         this.productUseCase.deleteProduct(userId);
         return ResponseEntity.noContent().build();
 

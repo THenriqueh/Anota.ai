@@ -2,9 +2,11 @@ package com.anotaai.anota.ai.service;
 
 import com.anotaai.anota.ai.domain.category.Category;
 import com.anotaai.anota.ai.dto.CategoryDTO;
+import com.anotaai.anota.ai.dto.CategoryUpdateDTO;
 import com.anotaai.anota.ai.exceptions.CategoryNotFoundException;
 import com.anotaai.anota.ai.mapper.CategoryMapper;
 import com.anotaai.anota.ai.repository.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +14,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryUseCase {
 
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    private CategoryMapper categoryMapper;
-
-    public CategoryUseCase(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+    private final CategoryMapper categoryMapper;
 
     public Category createCategory(CategoryDTO categoryData) {
         // Business logic to create a category
@@ -39,12 +38,9 @@ public class CategoryUseCase {
                 .orElseThrow(() -> new CategoryNotFoundException(categoryId)));
     }
 
-    public Category updateCategory(String userId, CategoryDTO categoryData) {
+    public Category updateCategory(String userId, CategoryUpdateDTO categoryData) {
         Category categoryFromDb = this.categoryRepository.findById(userId)
                 .orElseThrow(() -> new CategoryNotFoundException(userId));
-
-        if(!categoryData.title().isEmpty()) categoryFromDb.setTitle(categoryData.title());
-        if(!categoryData.description().isEmpty()) categoryFromDb.setDescription(categoryData.description());
 
         this.categoryRepository.save(categoryFromDb);
 

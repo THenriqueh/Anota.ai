@@ -2,6 +2,7 @@ package com.anotaai.anota.ai.controller;
 
 import com.anotaai.anota.ai.domain.category.Category;
 import com.anotaai.anota.ai.dto.CategoryDTO;
+import com.anotaai.anota.ai.dto.CategoryUpdateDTO;
 import com.anotaai.anota.ai.service.CategoryUseCase;
 import jakarta.websocket.server.PathParam;
 import org.springframework.http.ResponseEntity;
@@ -31,14 +32,14 @@ public class CategoryController {
         return ResponseEntity.ok().body(categories);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<Category> updateCategory(@PathParam("id") String userId, @RequestBody CategoryDTO category) {
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<Category> updateCategory(@PathVariable("categoryId") String userId, @RequestBody CategoryUpdateDTO category) {
         Category updatedCategory = this.categoryUseCase.updateCategory(userId, category);
         return ResponseEntity.ok().body(updatedCategory);
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Void> deleteCategory(@PathParam("id") String userId) {
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable("categoryId") String userId) {
         this.categoryUseCase.deleteCategory(userId);
         return ResponseEntity.noContent().build();
 
